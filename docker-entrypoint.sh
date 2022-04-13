@@ -37,6 +37,15 @@ _term() {
   done
 }
 
+exit_script() {
+    echo "Printing something special!"
+    echo "Maybe executing other commands!"
+    trap - SIGINT SIGTERM # clear the trap
+    kill -- -$$ # Sends SIGTERM to child/sub processes
+}
+
+trap exit_script SIGINT SIGTERM
+
 cp /etc/config/common/* $MZ_HOME/etc
 
 while getopts j:e: opts; do
