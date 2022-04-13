@@ -9,7 +9,7 @@ echo "$ts Entering entrypoint"
 
 # SIGTERM-handler
 _term() {
-  echo "Entering SIGTERM..."
+  echo "TEST Entering SIGTERM..."
   echo "Caught SIGTERM signal!"
   pid=$(pgrep -f CodeServerMain)
   mzsh shutdown platform
