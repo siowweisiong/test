@@ -96,4 +96,8 @@ fi
 
 tail -F "$log"&
 
-eval $start_pico
+eval $start_pico&
+
+child=$!
+
+wait "$child"
