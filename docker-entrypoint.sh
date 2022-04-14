@@ -7,11 +7,13 @@ set -e
 ts=$(date '+%F %T');
 echo "$ts Entering entrypoint"
 
+log=$MZ_HOME/persistent/log/platform/platform_current.log
+
 # SIGTERM-handler
 _term() {
-  echo "Caught SIGTERM signal!"
+  echo "Caught SIGTERM signal!" >> "$log"
   pid=$(pgrep -f CodeServerMain)
-  mzsh shutdown platform
+  mzsh shutdown platform >> "$log"
 
   # Wait for graceful termination
   timeout=300
@@ -22,10 +24,10 @@ _term() {
     if [[ ! $counter < $timeout ]]; then
       # timeout reached
       if [[ $force_shutdown == true ]]; then
-        echo "Shutdown failed. Exiting..."
+        echo "Shutdown failed. Exiting..." >> "$log"
         exit 1
       fi
-      echo "Graceful shutdown timeout reached. Trying kill instead..."
+      echo "Graceful shutdown timeout reached. Trying kill instead..." >> "$log"
       kill -TERM "$pid"
       force_shutdown=true
       # reset counter
@@ -36,14 +38,7 @@ _term() {
   done
 }
 
-exit_script() {
-    echo "=================== Printing something special! ==================="
-    echo "=================== Maybe executing other commands! ==================="
-    trap - SIGINT SIGTERM # clear the trap
-    kill -- -$$ # Sends SIGTERM to child/sub processes
-}
-
-trap exit_script SIGINT SIGTERM
+trap _term SIGTERM
 
 cp /etc/config/common/* $MZ_HOME/etc
 
@@ -92,13 +87,6 @@ else
 	echo "$ts Starting platform"
 fi
 
-tail -F persistent/log/platform/platform_current.log&
+tail -F "$log"&
 
-eval $start_pico &
-
-child=$!
-
-echo "================================ TEST HERE ================================"
-
-wait "$child"
-
+eval $start_pico
