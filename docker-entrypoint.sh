@@ -39,8 +39,9 @@ _term() {
 }
 
 exit_script() {
-    echo "Printing something special!" >> "$log"
-    echo "Maybe executing other commands!" >> "$log"
+    echo "================= Printing something special! ================="
+    echo "================= Printing something special! =================" >> "$log"
+
     trap - SIGINT SIGTERM # clear the trap
     kill -- -$$ # Sends SIGTERM to child/sub processes
 }
