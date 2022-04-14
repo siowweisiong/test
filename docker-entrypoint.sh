@@ -9,6 +9,14 @@ echo "$ts Entering entrypoint"
 
 log=$MZ_HOME/persistent/log/platform/platform_current.log
 
+_init() {
+    echo "================= Caught SIGINT signal! ================="
+    echo "================= Caught SIGINT signal! =================" >> /tmp/message
+    echo "================= Caught SIGINT signal! =================" >> "$log"
+}
+
+trap _init SIGINT
+
 _term() {
     echo "================= Caught SIGTERM signal! ================="
     echo "================= Caught SIGTERM signal! =================" >> /tmp/message
