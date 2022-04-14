@@ -38,7 +38,14 @@ _term() {
   done
 }
 
-trap _term SIGTERM
+exit_script() {
+    echo "Printing something special!" >> "$log"
+    echo "Maybe executing other commands!" >> "$log"
+    trap - SIGINT SIGTERM # clear the trap
+    kill -- -$$ # Sends SIGTERM to child/sub processes
+}
+
+trap exit_script SIGINT SIGTERM
 
 cp /etc/config/common/* $MZ_HOME/etc
 
