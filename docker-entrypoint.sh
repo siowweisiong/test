@@ -69,9 +69,9 @@ fi
 
 tail -F "$log"&
 
-eval $start_pico&
+$start_pico
 
-wait $!
+# wait $!
 
 echo "================= END ================= " 
 echo "================= END ================= " >> /tmp/message
