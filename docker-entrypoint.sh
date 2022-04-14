@@ -9,15 +9,16 @@ echo "$ts Entering entrypoint"
 
 log=$MZ_HOME/persistent/log/platform/platform_current.log
 
-exit_script() {
+_term() {
     echo "================= Caught SIGTERM signal! ================="
+    echo "================= Caught SIGTERM signal! =================" >> /tmp/message
     echo "================= Caught SIGTERM signal! =================" >> "$log"
 
 #     trap - SIGINT SIGTERM # clear the trap
 #     kill -- -$$ # Sends SIGTERM to child/sub processes
 }
 
-trap exit_script SIGTERM
+trap _term SIGTERM
 
 cp /etc/config/common/* $MZ_HOME/etc
 
@@ -72,10 +73,10 @@ child=$!
 
 tail -F "$log"&
 
-echo "================= child is $child ================= "
-echo "================= child is $child ================= " >> "$log"
+echo "================= waiting child ================= "
 
 wait "$child"
 
-echo "================= END ================= "
+echo "================= END ================= " 
+echo "================= END ================= " >> /tmp/message
 echo "================= END ================= " >> "$log"
