@@ -7,23 +7,13 @@ set -e
 ts=$(date '+%F %T');
 echo "$ts Entering entrypoint"
 
-log=$MZ_HOME/persistent/log/platform/platform_current.log
-
-_init() {
-    echo "================= Caught SIGINT signal! ================="
-    echo "================= Caught SIGINT signal! =================" >> /tmp/message
-    echo "================= Caught SIGINT signal! =================" >> "$log"
-}
-
-trap _init SIGINT
-
+# SIGTERM-handler
 _term() {
-    echo "================= Caught SIGTERM signal! ================="
-    echo "================= Caught SIGTERM signal! =================" >> /tmp/message
-    echo "================= Caught SIGTERM signal! =================" >> "$log"
-
-#     trap - SIGINT SIGTERM # clear the trap
-#     kill -- -$$ # Sends SIGTERM to child/sub processes
+  echo "Caught SIGTERM signal!"
+  pid=$(pgrep -f CodeServerMain)
+  kill -TERM "$pid"
+  # Wait for graceful termination
+  while ps -p $pid > /dev/null; do sleep 1; done;
 }
 
 trap _term SIGTERM
@@ -75,12 +65,10 @@ else
 	echo "$ts Starting platform"
 fi
 
-tail -F "$log"&
+eval $start_pico &
 
-eval $start_pico
+child=$!
 
-# wait $!
+tail -F persistent/log/platform/platform_current.log&
 
-echo "================= END ================= " 
-echo "================= END ================= " >> /tmp/message
-echo "================= END ================= " >> "$log"
+wait "$child"
