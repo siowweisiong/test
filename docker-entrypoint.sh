@@ -94,7 +94,11 @@ fi
 
 tail -F persistent/log/platform/platform_current.log&
 
-eval $start_pico
+eval $start_pico &
+
+child=$!
 
 echo "================================ TEST HERE ================================"
+
+wait "$child"
 
