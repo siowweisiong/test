@@ -93,6 +93,8 @@ else
 	echo "$ts Starting platform"
 fi
 
+echo "================================ TEST HERE ================================"
+
 tail -F persistent/log/platform/platform_current.log&
 
 eval $start_pico
