@@ -9,7 +9,6 @@ echo "$ts Entering entrypoint"
 
 # SIGTERM-handler
 _term() {
-  echo "TEST Entering SIGTERM..."
   echo "Caught SIGTERM signal!"
   pid=$(pgrep -f CodeServerMain)
   mzsh shutdown platform
@@ -93,8 +92,9 @@ else
 	echo "$ts Starting platform"
 fi
 
-echo "================================ TEST HERE ================================"
-
 tail -F persistent/log/platform/platform_current.log&
 
 eval $start_pico
+
+echo "================================ TEST HERE ================================"
+
