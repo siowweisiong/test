@@ -9,44 +9,15 @@ echo "$ts Entering entrypoint"
 
 log=$MZ_HOME/persistent/log/platform/platform_current.log
 
-# SIGTERM-handler
-_term() {
-  echo "Caught SIGTERM signal!" >> "$log"
-  pid=$(pgrep -f CodeServerMain)
-  mzsh shutdown platform >> "$log"
-
-  # Wait for graceful termination
-  timeout=300
-  counter=0
-  force_shutdown=false
-
-  while ps -p "$pid" > /dev/null; do
-    if [[ ! $counter < $timeout ]]; then
-      # timeout reached
-      if [[ $force_shutdown == true ]]; then
-        echo "Shutdown failed. Exiting..." >> "$log"
-        exit 1
-      fi
-      echo "Graceful shutdown timeout reached. Trying kill instead..." >> "$log"
-      kill -TERM "$pid"
-      force_shutdown=true
-      # reset counter
-      counter=0
-    fi
-    sleep 1;
-    ((counter++))
-  done
-}
-
 exit_script() {
-    echo "================= Printing something special! ================="
-    echo "================= Printing something special! =================" >> "$log"
+    echo "================= Caught SIGTERM signal! ================="
+    echo "================= Caught SIGTERM signal! =================" >> "$log"
 
-    trap - SIGINT SIGTERM # clear the trap
-    kill -- -$$ # Sends SIGTERM to child/sub processes
+#     trap - SIGINT SIGTERM # clear the trap
+#     kill -- -$$ # Sends SIGTERM to child/sub processes
 }
 
-trap exit_script SIGINT SIGTERM
+trap exit_script SIGTERM
 
 cp /etc/config/common/* $MZ_HOME/etc
 
@@ -95,17 +66,16 @@ else
 	echo "$ts Starting platform"
 fi
 
-tail -F "$log"&
-
 eval $start_pico&
 
 child=$!
 
+tail -F "$log"&
+
 echo "================= child is $child ================= "
-#echo "================= child is $child ================= " >> "$log"
+echo "================= child is $child ================= " >> "$log"
 
 wait "$child"
 
 echo "================= END ================= "
 echo "================= END ================= " >> "$log"
-
