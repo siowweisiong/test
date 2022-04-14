@@ -67,13 +67,11 @@ else
 	echo "$ts Starting platform"
 fi
 
+tail -F "$log"&
+
 eval $start_pico&
 
 child=$!
-
-tail -F "$log"&
-
-echo "================= waiting child ================= "
 
 wait "$child"
 
