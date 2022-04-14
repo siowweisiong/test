@@ -71,9 +71,7 @@ tail -F "$log"&
 
 eval $start_pico&
 
-child=$!
-
-wait "$child"
+wait $!
 
 echo "================= END ================= " 
 echo "================= END ================= " >> /tmp/message
