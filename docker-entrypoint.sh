@@ -54,7 +54,7 @@ export MZSH_PICO_TYPE="platform"
 
 ts=$(date '+%F %T');
 echo "$ts Getting startup cmd..."
-start_pico=$(eval "mzsh startup platform $OPTS -v show-cmdline-and-exit")
+start_pico="$(mzsh startup platform $OPTS -v show-cmdline-and-exit)"
 ts=$(date '+%F %T');
 echo "$ts Done getting startup cmd"
 
