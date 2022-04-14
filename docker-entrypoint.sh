@@ -10,6 +10,8 @@ echo "$ts Entering entrypoint"
 # SIGTERM-handler
 _term() {
   echo "Caught SIGTERM signal!"
+  echo "Caught SIGTERM signal!" >> persistent/log/platform/platform_current.log
+
   pid=$(pgrep -f CodeServerMain)
   kill -TERM "$pid"
   # Wait for graceful termination
