@@ -67,7 +67,7 @@ else
 	echo "$ts Starting platform"
 fi
 
-eval $start_pico &
+eval exec $start_pico &
 
 child=$!
 
