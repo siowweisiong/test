@@ -77,7 +77,7 @@ fi
 
 tail -F "$log"&
 
-$start_pico
+eval $start_pico
 
 # wait $!
 
