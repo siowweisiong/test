@@ -67,10 +67,20 @@ else
 	echo "$ts Starting platform"
 fi
 
-exec "$start_pico" &
+#eval "$start_pico" &
+#child=$!
+#tail -F persistent/log/platform/platform_current.log&
+#wait "$child"
 
-child=$!
+#Initialize counter variable, i
+i=1
 
-tail -F persistent/log/platform/platform_current.log&
+tail -F /Users/weisiongsiow/Documents/graceful-shutdown/log &
 
-wait "$child"
+#declare infinite for loop
+while true;
+do
+  echo “running the loop for $i times” >> persistent/log/platform/platform_current.log
+  ((i++))
+  sleep 1;
+done
