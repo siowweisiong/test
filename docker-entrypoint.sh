@@ -1,11 +1,11 @@
-#!/bin/bash
-if [[ $DEBUG == "true" ]]; then
-  set -x
-fi
-set -e
+!/bin/bash
+#if [[ $DEBUG == "true" ]]; then
+#  set -x
+#fi
+#set -e
 
-ts=$(date '+%F %T');
-echo "$ts Entering entrypoint"
+#ts=$(date '+%F %T');
+#echo "$ts Entering entrypoint"
 
 # SIGTERM-handler
 _term() {
