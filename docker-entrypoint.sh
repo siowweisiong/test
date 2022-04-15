@@ -13,10 +13,10 @@ _term() {
   echo "Caught SIGTERM signal!"
   echo "Caught SIGTERM signal!" >> persistent/log/platform/platform_current.log
 
-  pid=$(pgrep -f CodeServerMain)
-  kill -TERM "$pid"
+#  pid=$(pgrep -f CodeServerMain)
+#  kill -TERM "$pid"
   # Wait for graceful termination
-  while ps -p $pid > /dev/null; do sleep 1; done;
+#  while ps -p $pid > /dev/null; do sleep 1; done;
 }
 
 trap _term SIGTERM
