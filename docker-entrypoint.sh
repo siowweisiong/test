@@ -49,7 +49,7 @@ if [[ ! -z "$OPERATOR_PASSWORD" ]]; then
 	OPTS="$OPTS -e mz.operator.password=$OPERATOR_PASSWORD"
 fi
 
-$MZ_HOME/entrypoint/generate-license-file.sh
+#$MZ_HOME/entrypoint/generate-license-file.sh
 
 # this ensures that the mzsh log file appears in the correct location
 export MZSH_PICO_TYPE="platform"
