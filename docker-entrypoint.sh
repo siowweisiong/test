@@ -9,7 +9,7 @@
 #echo "$ts Entering entrypoint"
 
 # SIGTERM-handler
-_term() {
+exit_script() {
   echo "Caught SIGTERM signal!"
   echo "Caught SIGTERM signal!" >> persistent/log/platform/platform_current.log
 
@@ -19,7 +19,7 @@ _term() {
 #  while ps -p $pid > /dev/null; do sleep 1; done;
 }
 
-trap _term SIGTERM
+trap exit_script SIGTERM
 
 ####################### REPLACE #######################
 
