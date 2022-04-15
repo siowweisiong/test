@@ -23,6 +23,8 @@ trap _term SIGTERM
 
 ####################### REPLACE #######################
 
+tail -F persistent/log/platform/platform_current.log&
+
 #Initialize counter variable, i
 i=1
 
