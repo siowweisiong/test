@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 
 #if [[ $DEBUG == "true" ]]; then
 #  set -x
