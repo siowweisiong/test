@@ -1,0 +1,8 @@
+{
+  "ErrorCode": "AGGR_UNMATCHED_UDR",
+  "Description": "UDR not matching a session reported by Aggregation agent",
+  "IsSystemDefined": true,
+  "RepGroupId": 0,
+  "$Type": "dr.DVErrorCode",
+  "$Version": 1.1
+}
