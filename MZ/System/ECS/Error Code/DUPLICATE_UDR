@@ -1,8 +1,0 @@
-{
-  "ErrorCode": "DUPLICATE_UDR",
-  "Description": "Duplicate UDR reported by DupUDR agent",
-  "IsSystemDefined": true,
-  "RepGroupId": 0,
-  "$Type": "dr.DVErrorCode",
-  "$Version": 1.1
-}
